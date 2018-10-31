@@ -1,7 +1,10 @@
-/*	Cook class script for MPMB character sheet
+/*	Cook class script v0.2 for MPMB character sheet
 	MPMB Copyright (C) 2014 Joost Wijnen; Flapkan Productions
-	Cook class v16 by Sam Grierson
+	Cook class v1.7 by Sam Grierson
 	This script by Troy Routley
+	
+	Change List:
+	updated for cook class v1.7
 */
 
 var iFileName = "Cook.js";
@@ -24,7 +27,7 @@ ClassList["cook"] = {
 	armor : [[true, true, false, false], [true, true, false, false]],
 	weapons : [[true, false, ["hand crossbow", "longsword", "rapier", "shortsword"]], [true, false]],
 	equipment : "Cook starting equipment:\n \u2022 (a) a longsword or (b) a hand crossbow and 20 bolts;\n \u2022 (a) leather armor or (b) scale mail;\n \u2022 (a) two daggers or (b) two light hammers;\n \u2022 (a) an explorer's pack or (b) a scholar's pack;\n \u2022 Cook's utensils and a Cook's bag.\n\nAlternately, you can start with 4d4 \xD7 10 gold pieces instead of both the class' and the background's starting equipment.",
-	subclasses : ["Cook Archetype", ["cook-sous chef", "cook-mess sergeant", "cook-hash slinger"]],
+	subclasses : ["Cook Archetype", ["cook-sous chef", "cook-mess sergeant", "cook-hash slinger", "cook-brewmeister", "cook-monster masher"]],
 	attacks : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 	abilitySave : 3,
 	features : {
@@ -32,20 +35,20 @@ ClassList["cook"] = {
 			name : "Cook's Bag",
 			source : ["HB", 0],
 			minlevel : 1,
-			description : "\n   " + "At first level, you craft a Cook's Bag, a bag that magically preserves not only your morsels, but also the ingredients required to make them.\n   You must replenish these ingredients at least once every 30 days. When you do so, you can buy 10 gp worht of food from a market, or you can spend 8 hours scavenging food from your surroundings.\n   If you lose this bag, you can create a new one by expending 100 gp worth of leather, gems, and other raw materials. Doing so takes 8 hours of work."
+			description : "\n   " + "Magically preserves not only your morsels, but also the ingredients required to make them. Replenish these ingredients at least once every 30 days by buying 10 gp worth of food from a market, or spending 8 hours scavenging food from your surroundings. If you lose this bag, you can create a new one by expending 100 gp worth of leather, gems, and other raw materials. Doing so takes 8 hours of work."
 		},
 		"morsels" : {
 			name : "Morsels",
 			source : ["HB", 0],
 			minlevel : 1,
-			description : "\n   " + "Choose morsels using the \"Choose Feature\" button above.\n   You learn additional morsels as you level. Each time you gain a level, you may replace one morsel you know with a different morsel.\n   You may cook a number of morsels equal to your Con modifier every short or long rest. You may cook the same type of morsel more than once. All morsels are stored in your Cook's Bag and expire if taken out for longer than 6 seconds, or the next time you cook morsels.\n   You may reach into your Cook's Bag, pull out a morsel, and feed it to a concious creature you can touch as an action. You must have a free hand to reach into your Cook's Bag.",
+			description : "\n   " + "Choose morsels using the \"Choose Feature\" button above.\n   Morsels are stored in Cook's Bag and expire if taken out for longer than 6 seconds, or the next time you cook morsels.",
 			action : ["action", " - range touch"],
 			usages : "Constitution modifier per ",
-			usagecalc : "event.value = Math.max(1, What('Con Mod'));",
+			usagescalc : "event.value = Math.max(1, What('Con Mod'));",
 			recovery : "short rest",
 			additional : ["3 known", "3 known", "4 known", "5 known", "6 known", "7 known", "8 known", "9 known", "10 known", "11 known", "12 known", "12 known", "13 known", "13 known", "14 known", "14 known", "14 known", "15 known", "15 known", "15 known"],
 			extraname : "Morsel",
-			extrachoices : ["Almond Milk", "Carrot Casserole", "Cow Innards", "Flavored Ice", "Hardened Bread", "Herbal Grey Tea", "Invigorating Juices", "Packed Protein", "Smoky Chops", "Spicy Pepper", "Sugar Crystals", "Braised Rabbit (prereq: lvl 7 cook)", "Buttered Trout (prereq: lvl 7 cook)", "Roast Pheasant (prereq: lvl 7 cook)", "Spider Eggs (prereq: lvl 7 cook)", "Thickening Gruel (prereq: lvl 7 cook)", "Chamomile Tea (prereq: lvl 11 cook)", "Shreevy Leaves (prereq: lvl 11 cook)", "Spectral Sprouts (prereq: lvl 11 cook)", "Startouched Seeds (prereq: lvl 11 cook)", "Sweet and Sour Beets (prereq: lvl 11 cook)", "Boiled Dragon's Tail (prereq: lvl 15 cook)", "Hydra Tongue (prereq: lvl 15 cook)", "Elemental Pie (prereq: lvl 15 cook)", "Frosted Grapes (prereq: sous chef)", "Strong Ale (prereq: lvl 7 sous chef)", "Honeyed Fish (prereq: lvl 13 sous chef)", "Pine Nut Mash (prereq: lvl 17 sous chef)", "Stinking Sprouts (prereq: mess sergeant)", "Bloating Beans (prereq: lvl 7 mess sergeant)", "Jittering Coffee (prereq: lvl 13 mess sergeant)", "Fatty Oats (prereq: lvl 17 mess sergeant)", "Greasy Slosh (prereq: hash slinger)", "Fire Salts (prereq: lvl 7 hash slinger)", "Garlic Tuna (prereq: lvl 13 hash slinger)", "Rancid Onion (prereq: lvl 17 hash slinger)"],
+			extrachoices : ["Almond Milk", "Carrot Casserole", "Cow Innards", "Flavored Ice", "Hardened Bread", "Herbal Grey Tea", "Invigorating Juices", "Packed Protein", "Smoky Chops", "Spicy Pepper", "Sugar Crystals", "Braised Rabbit (prereq: lvl 7 cook)", "Buttered Trout (prereq: lvl 7 cook)", "Roast Pheasant (prereq: lvl 7 cook)", "Spider Eggs (prereq: lvl 7 cook)", "Thickening Gruel (prereq: lvl 7 cook)", "Chamomile Tea (prereq: lvl 11 cook)", "Shreevy Leaves (prereq: lvl 11 cook)", "Spectral Sprouts (prereq: lvl 11 cook)", "Startouched Seeds (prereq: lvl 11 cook)", "Sweet and Sour Beets (prereq: lvl 11 cook)", "Boiled Dragon's Tail (prereq: lvl 15 cook)", "Hydra Tongue (prereq: lvl 15 cook)", "Elemental Pie (prereq: lvl 15 cook)", "Frosted Grapes (prereq: sous chef)", "Strong Ale (prereq: lvl 7 sous chef)", "Honeyed Fish (prereq: lvl 13 sous chef)", "Pine Nut Mash (prereq: lvl 17 sous chef)", "Stinking Sprouts (prereq: mess sergeant)", "Bloating Beans (prereq: lvl 7 mess sergeant)", "Jittering Coffee (prereq: lvl 13 mess sergeant)", "Fatty Oats (prereq: lvl 17 mess sergeant)", "Greasy Slosh (prereq: hash slinger)", "Fire Salts (prereq: lvl 7 hash slinger)", "Garlic Tuna (prereq: lvl 13 hash slinger)", "Rancid Onion (prereq: lvl 17 hash slinger)", "Underdark Draught (prereq: brewmeister)", "Vodka Slushie (prereq: lvl 7 brewmeister)", "Hellfire Whiskey (prereq: lvl 13 brewmeister)", "Angel's Kiss (prereq: lvl 17 brewmeister)"],
 			"almond milk" : {
 				name : "Almond Milk",
 				source : ["HB", 0], 
@@ -59,7 +62,7 @@ ClassList["cook"] = {
 			"cow innards" : {
 				name : "Cow Innards",
 				source : ["HB", 0], 
-				description : "\n   " + "Target must make Con save. On fail target has disadvantage on all Cha checks and creatures within 60' of the target cannot be charmed by the target for 10 minutes. If any creatures within 60' of the target were charmed by the target when the morsel is ingested, they are no longer charmed."
+				description : "\n   " + "Target must make Con save. On fail target has disadvantage on all Cha checks and creatures cannot be charmed by the target for 10 minutes. If any creatures were charmed by the target when the morsel is ingested, they are no longer charmed."
 			}, 
 			"flavored ice" : {
 				name : "Flavored Ice",
@@ -84,7 +87,7 @@ ClassList["cook"] = {
 			"packed protein" : {
 				name : "Packed Protein",
 				source : ["HB", 0], 
-				description : "\n   " + "Target adds 1d4 to all attack rolls and ability checks using Str for 1 minute. At 10th level, the target also adds 1d4 to damage rolls they make using Str. At 15th level, the die is 1d6 instead of 1d4."				
+				description : "\n   " + "Target adds 1d4 to all damage rolls and ability checks using Str for 1 minute. The die size increases to 1d6 at cook level 10, 1d8 at 15, and 1d10 at 20."				
 			}, 
 			"smoky chops" : {
 				name : "Smoky Chops",
@@ -182,7 +185,7 @@ ClassList["cook"] = {
 			"frosted grapes (prereq: sous chef)" : {
 				name : "Frosted Grapes",
 				source : ["HB", 0], 
-				description : "\n   " + "For 1 minute, the target adds 1d4 to all attack rolls and ability checks they make using Dex.\n   At 10th lvl, the target also adds 1d4 to damage rolls they make using Dex. At 15th level, the target adds 1d6 instead of 1d4.",
+				description : "\n   " + "Target adds 1d4 to all damage rolls and ability checks using Dex for 1 minute. The die size increases to 1d6 at cook level 10, 1d8 at 15, and 1d10 at 20.",
 				prereqeval : "classes.known.cook.level >= 3 && classes.known.cook.subclass == 'cook-sous chef'"
 			}, 
 			"strong ale (prereq: lvl 7 sous chef)" : {
@@ -224,7 +227,7 @@ ClassList["cook"] = {
 			"fatty oats (prereq: lvl 17 mess sergeant)" : {
 				name : "Fatty Oats",
 				source : ["HB", 0], 
-				description : "\n   " + "The target has resistance to all damage except psychic damage for 1 minute.",
+				description : "\n   " + "The target has resistance to all damage until the start of your next turn.",
 				prereqeval : "classes.known.cook.level >= 17 && classes.known.cook.subclass == 'cook-mess sergeant'"
 			}, 
 			"greasy slosh (prereq: hash slinger)" : {
@@ -240,30 +243,54 @@ ClassList["cook"] = {
 				prereqeval : "classes.known.cook.level >= 7 && classes.known.cook.subclass == 'cook-hash slinger'"
 			}, 
 			"garlic tuna (prereq: lvl 13 hash slinger)" : {
-				name : "Garlic Tuna (prereq: lvl 13 hash slinger)",
+				name : "Garlic Tuna",
 				source : ["HB", 0], 
-				description : "\n   " + "Target must make a Con save. On fail, all creatures within 10' (including the target) have disadvantage on saving throws for 1 minute.",
+				description : "\n   " + "Target must make a Con save. On fail, all hostile creatures within 10' (including the target) have disadvantage on saving throws for 1 minute.",
 				prereqeval : "classes.known.cook.level >= 13 && classes.known.cook.subclass == 'cook-hash slinger'"
 			}, 
 			"rancid onion (prereq: lvl 17 hash slinger)" : {
-				name : "Rancid Onion (prereq: lvl 17 hash slinger)",
+				name : "Rancid Onion",
 				source : ["HB", 0], 
-				description : "\n   " + "All creatures within 15' of the target (including the target) must make a Con saving throw. On fail, they are paralyzed until the start of your next turn and blinded for 1 minute. At the end of each of its turns, a target may make another Con save: success ends the blindness.",
+				description : "\n   " + "All hostile creatures within 30' of the target (including the target) must make a Con saving throw. On fail, they are paralyzed until the start of your next turn and blinded for 1 minute. At the end of each of its turns, a target may make another Con save: success ends the blindness.",
 				prereqeval : "classes.known.cook.level >= 17 && classes.known.cook.subclass == 'cook-hash slinger'"
+			},
+			"underdark draught (prereq: brewmeister)" : {
+				name : "Underdark Draught",
+				source : ["HB", 0], 
+				description : "\n   " + "10' radius magical darkness centered on target for 1 minute. All creatures friendly to the target (including the target) can see through this magical darkness.",
+				prereqeval : "classes.known.cook.level >= 3 && classes.known.cook.subclass == 'cook-brewmeister'"
+			},
+			"vodka slushie (prereq: lvl 7 brewmeister)" : {
+				name : "Vodka Slushie",
+				source : ["HB", 0], 
+				description : "\n   " + "20' radius difficult terrain centered on target. When created, all creatures hostile to the target within the area must make Str saves or be pushed out of the area away from the target. Lasts 1 minute or until melted by intense heat.",
+				prereqeval : "classes.known.cook.level >= 7 && classes.known.cook.subclass == 'cook-brewmeister'"
+			},
+			"hellfire whiskey (prereq: lvl 13 brewmeister)" : {
+				name : "Hellfire Whiskey",
+				source : ["HB", 0], 
+				description : "\n   " + "Target wreathed in yellow-green flames for 1 minute. Large or smaller creatures hostile to the target starting their turn within 10' of the target must make Con saves or suffer one level of exhaustion.",
+				prereqeval : "classes.known.cook.level >= 13 && classes.known.cook.subclass == 'cook-brewmeister'"
+			},
+			"angel's kiss (prereq: lvl 17 brewmeister)" : {
+				name : "Angel's Kiss",
+				source : ["HB", 0], 
+				description : "\n   " + "Target sheds bright light in 30' radius and dim light for additional 30'. Creatures hostile to the target starting their turn in the bright light must make Con saves or be blinded until the start of their next turn. Creatures with darksvision save at disadvantage.",
+				prereqeval : "classes.known.cook.level >= 17 && classes.known.cook.subclass == 'cook-brewmeister'"
 			}
 		},
 		"smelling salts" : {
 			name : "Smelling Salts",
 			source : ["HB", 0],
 			minlevel : 1,
-			description : "\n   " + "As a bonus action, you can wave smelling salts under the nose of a charmed or frightened creature that you can touch. If the creature has made a saving throw against their condition, they may repeat that saving throw now, ending the condition on a success. The creature may only repeat the saving throw for one condition they have per use of this feature.\n   At 7th level, you may use this feature on a stunned creature.\n   At 13th level, you may use this feature on a paralyzed creature.",
+			description : "\n   " + "Bonus action: wave smelling salts under the nose of charmed or frightened creature that you can touch. If the creature has made a saving throw against their condition, they may repeat one save now, ending the condition on a success.\n   At 7th level, you may use this feature on a stunned creature.\n   At 13th level, you may use this feature on a paralyzed creature.",
 			action : ["bonus action", ""] 
 		},
 		"expertise" : {
 			name : "Expertise",
 			source : ["HB", 0],
 			minlevel : 2,
-			description : "\n   " + "Expertise with two of your skill proficiencies and/or Cook's utensils and two more at 10th level."
+			description : "\n   " + "Expertise with two of your skill proficiencies and/or Cook's utensils and two more at 9th level."
 		},
 		"subclassfeature3" : {
 			name : "Cook Archetype",
@@ -284,7 +311,7 @@ ClassList["cook"] = {
 			minlevel : 7,
 			description : "\n   " + "When you make morsels during a long rest, you can make a number of additional morsels equal to your Con ability modifier, none of which may have prerequisites.\n   At 11th level, you can make these additional morsels during a short rest as well as a long rest.",
 			usages : "Constitution modifier per ",
-			usagecalc : "event.value = Math.max(1, What('Con Mod'));",
+			usagescalc : "event.value = Math.max(1, What('Con Mod'));",
 			recovery : levels.map(function (n) {
 					return n < 11 ? "long rest" : "short rest";
 				}),
@@ -341,7 +368,7 @@ ClassSubList["cook-sous chef"] = {
 			name : "Aromatic Sweat",
 			source : ["HB", 0],
 			minlevel : 10,
-			description : "\n   " + "Once per long rest, as an action, all friendly creatures (including yourself) within 15' that you can see regain a number of hit points equal to your Cook level and can immediately use their reaction to make a single weapon attack.",
+			description : "\n   " + "Once per long rest, as an action, all friendly creatures (including yourself) within 30' that you can see regain a number of hit points equal to your Cook level and can immediately use their reaction to make a single weapon attack.",
 			usages : 1,
 			recovery : "long rest"
 		},
@@ -441,7 +468,7 @@ ClassSubList["cook-hash slinger"] = {
 			source : ["HB", 0],
 			minlevel : 14,
 			description : "\n   " + "Once per rest, when a creature makes a saving throw against one of your morsel's effects, you may impose disadvantage on the roll.",
-			usages: 1,
+			usages : 1,
 			recovery: "short rest"
 		},
 		"subclassfeature18" : {
@@ -449,6 +476,90 @@ ClassSubList["cook-hash slinger"] = {
 			source : ["HB", 0],
 			minlevel : 14,
 			description : "\n   " + "You may make the legendary morsel Bubbly Pill once per long rest. It does not expire until your next long rest.\n   Bubbly Pill: Target makes a Con save. On fail, they are poisoned and their speed is halved until the end of your next turn. Successful or not, if the target is killed within 1 hour, it explodes. All creatures within 10' of the target must make Dex saves. On fail, they take 10d6 force damage, and 5d6 extra force damage for each size of the target larger than Medium. On success, half damage.",
+			usages : 1,
+			recovery : "long rest"
+		}
+	}
+};
+
+ClassSubList["cook-brewmeister"] = {
+	regExpSearch : /brewmeister/i,
+	subname : "Brewmeister",
+	source : ["HB", 0],
+	features : {
+		"subclassfeature3" : {
+			name : "Spiked Morsels",
+			source : ["HB", 0],
+			minlevel : 3,
+			toolProfs : ["Brewer's supplies"],
+			description : "\n   " + "When you prepare a morsel, you may spike it. Effects from different spiked morsels stack. Creatures that eat more than one spiked morsel become intoxicated for one minute. Intoxicated creatures are immune to charmed and frightened conditions. When intoxication ends, all morsel effects end and the creature is 'hung over' - can't move or take actions until the end of its next turn."
+		},
+		"subclassfeature6" : {
+			name : "Drunken Stumble",
+			source : ["HB", 0],
+			minlevel : 6,
+			description : "\n   " + "Creatures intoxicated by you increase speed by 10' and other creatures have disadvantage on opportunity attacks against them."
+		},
+		"subclassfeature10" : {
+			name : "Boozy Yield",
+			source : ["HB", 0],
+			minlevel : 10,
+			description : "\n   " + "Creatures intoxicated by you are resistant to bludgeoning damage."
+		},
+		"subclassfeature14" : {
+			name : "Angry Drunk",
+			source : ["HB", 0],
+			minlevel : 14,
+			description : "\n   " + "Once per turn, creatures intoxicated by you may add your Con mod to a weapon attack damage roll."
+		},
+		"subclassfeature18" : {
+			name : "Legendary Morsel - Master Brew",
+			source : ["HB", 0],
+			minlevel : 14,
+			description : "\n   " + "You may make the legendary morsel Master Brew once per long rest. It does not expire until your next long rest.\n   Master Brew: Target becomes intoxicated for 10 minutes. When this intoxication ends, the target does not become hung over.",
+			usages : 1,
+			recovery : "long rest"
+		}
+	}
+};
+
+ClassSubList["cook-monster masher"] = {
+	regExpSearch : /^(?=.*monster)(?=.*masher).*$/i,
+	subname : "Monster Masher",
+	source : ["HB", 0],
+	features : {
+		"subclassfeature3" : {
+			name : "Vital Harvest",
+			source : ["HB", 0],
+			minlevel : 3,
+			description : "\n   " + "Harvest meat from hostile creatures of CR 1 or more killed by you or an ally. Harvesting takes 1 hour and must be done within 24 hours of kill. Meat is kept in Cook's Bag until ready to prepare. Only one harvest at a time. As part of a long rest, you can prepare a special meal from the harvest to feed up to 5 creatures. Meal provides a benefit for 8 hours after the long rest:\n \u2022 Beast. Current and max hit points increased by 10.\n \u2022 Monstrosity: Adv on Str, Dex, and Con saves vs magic.\n \u2022 Ooze: 10' blindsight.\n \u2022 Plant. While in direct sunlight adv on Str and Con checks and any dice to regain hit points count as having rolled maximum."
+		},
+		"subclassfeature6" : {
+			name : "Autonomous Bag",
+			source : ["HB", 0],
+			minlevel : 6,
+			description : "\n   " + "When you deal slashing damage with a melee weapon attack to a hostile creature that isn't humanoid, celestial, undead, construct, or fey, cut off a chunk of meat and place it in your Cook's Bag as part of the attack. It becomes a morsel that heals for 1d12 + your Con mod. You may only have one morsel of this type in your Cook's Bag at a time."
+		},
+		"subclassfeature10" : {
+			name : "Emboldened Harvest",
+			source : ["HB", 0],
+			minlevel : 10,
+			description : "\n   " + "You can harvest meat using Vital Harvest from additional creature types:\n \u2022 Aberration. Gain 60' darkvision and 60' telepathy.\n \u2022 Dragon. Gain flying speed of 60. If turn ends with you in the air, you fall.\n \u2022 Fiend. Adv on all Cha and Int ability checks and saving throws.\n \u2022 Giant. You gain benefits of the Enlarge spell."
+		},
+		"subclassfeature14" : {
+			name : "Vital Observance",
+			source : ["HB", 0],
+			minlevel : 14,
+			description : "\n   " + "If you observe a creature for 1 minute, you learn if it has any vulnerabilities, immunities, or resistances and what they are. You may do this Con mod (min 1) times per long rest.",
+			usages : "Constitution modifier per",
+			usagescalc: "event.value = Math.max(1, What('Con Mod'));",
+			recovery: "long rest"
+		},
+		"subclassfeature18" : {
+			name : "Legendary Morsel - Vital Meat",
+			source : ["HB", 0],
+			minlevel : 14,
+			description : "\n   " + "You may make the legendary morsel Vital Meat once per long rest. It does not expire until your next long rest.\n   Vital Meat: A bite of one of your harvests. Choose one of the effects listed in your Vital Harvest or Emboldened Harvest features. Target gains the chosen effect for 1 minute.",
 			usages : 1,
 			recovery : "long rest"
 		}
