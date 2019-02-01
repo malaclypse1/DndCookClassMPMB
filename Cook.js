@@ -1,10 +1,11 @@
-/*	Cook class script v0.2 for MPMB character sheet
+/*	Cook class script v0.3 for MPMB character sheet
 	MPMB Copyright (C) 2014 Joost Wijnen; Flapkan Productions
-	Cook class v1.7 by Sam Grierson
+	Cook class v2.0 by Sam Grierson
 	This script by Troy Routley
 	
 	Change List:
-	updated for cook class v1.7
+	* 2/1/19 updated for cook class v2.0
+	* 12/24/18 updated for cook class v1.7
 */
 
 var iFileName = "Cook.js";
@@ -42,7 +43,7 @@ ClassList["cook"] = {
 			source : ["HB", 0],
 			minlevel : 1,
 			description : "\n   " + "Choose morsels using the \"Choose Feature\" button above.\n   Morsels are stored in Cook's Bag and expire if taken out for longer than 6 seconds, or the next time you cook morsels.",
-			action : ["action", " - range touch"],
+			action : ["action", ", feed - range touch"],
 			usages : "Constitution modifier per ",
 			usagescalc : "event.value = Math.max(1, What('Con Mod'));",
 			recovery : "short rest",
@@ -62,17 +63,17 @@ ClassList["cook"] = {
 			"cow innards" : {
 				name : "Cow Innards",
 				source : ["HB", 0], 
-				description : "\n   " + "Target must make Con save. On fail target has disadvantage on all Cha checks and creatures cannot be charmed by the target for 10 minutes. If any creatures were charmed by the target when the morsel is ingested, they are no longer charmed."
+				description : "\n   " + "Target must make Con save. On fail target has disadvantage on all Cha checks and creatures cannot be charmed by the target for 10 minutes. If any creatures were charmed by the target when the morsel is ingested, the effect is suspended for the duration for any creatures that can see the target."
 			}, 
 			"flavored ice" : {
 				name : "Flavored Ice",
 				source : ["HB", 0], 
-				description : "\n   " + "Target must make Int save. On fail, it takes 1d6 cold damage and if the target is concentrating on a spell, double the DC for the Con saving throw to maintain concentration as a result of this damage. On a successful save, it takes half as much damage but the DC is still doubled.\n   The morsel's damage is increased at lvl 4 (2d6), lvl 7 (3d6), lvl 9 (4d6), lvl 13 (5d6), lvl 17 (6d6), and lvl 20 (7d6)."
+				description : "\n   " + "Target must make Int save. On fail, it takes 1d6 cold damage and has disadvantage on Concentration checks until the start of your next turn. On a successful save, it takes half as much damage and doesn't have disadvantage.\n   The morsel's damage is increased at lvl 4 (2d6), lvl 7 (3d6), lvl 9 (4d6), lvl 13 (5d6), lvl 17 (6d6), and lvl 20 (7d6)."
 			}, 
 			"hardened bread" : {
 				name : "Hardened Bread",
 				source : ["HB", 0], 
-				description : "\n   " + "Target must make Str save. On fail, it takes 1d6 bludgeoning damage and has disadvantage on attack rolls until the end of its next turn. On a successful save, it takes half as much damage and doesn't have disadvantage.\n   The morsel's damage is increased at lvl 4 (2d6), lvl 7 (3d6), lvl 9 (4d6), lvl 13 (5d6), lvl 17 (6d6), and lvl 20 (7d6)."				
+				description : "\n   " + "Target must make Str save. On fail, it takes 1d6 bludgeoning damage and has disadvantage on attack rolls until the start of your next turn. On a successful save, it takes half as much damage and doesn't have disadvantage.\n   The morsel's damage is increased at lvl 4 (2d6), lvl 7 (3d6), lvl 9 (4d6), lvl 13 (5d6), lvl 17 (6d6), and lvl 20 (7d6)."				
 			}, 
 			"herbal grey tea" : {
 				name : "Herbal Grey Tea",
@@ -82,7 +83,7 @@ ClassList["cook"] = {
 			"invigorating juices" : {
 				name : "Invigorating Juices",
 				source : ["HB", 0], 
-				description : "\n   " + "Target gains 1d8 temporary hit points.\n   The number of temporary hit points gained is increased at lvl 4 (2d8), lvl 7 (3d8), lvl 9 (4d8), lvl 13 (5d8), lvl 17 (6d8), and lvl 20 (7d8)."				
+				description : "\n   " + "Target gains 1d8 temporary hit points for 1 minute.\n   The number of temporary hit points gained is increased at lvl 4 (2d8), lvl 7 (3d8), lvl 9 (4d8), lvl 13 (5d8), lvl 17 (6d8), and lvl 20 (7d8)."				
 			}, 
 			"packed protein" : {
 				name : "Packed Protein",
@@ -119,7 +120,7 @@ ClassList["cook"] = {
 			"roast pheasant (prereq: lvl 7 cook)" : {
 				name : "Roast Pheasant",
 				source : ["HB", 0], 
-				description : "\n   " + "For 10 minutes, whenever they fall, target may control their falling speed at the start of each of their turns. It cannot exceed 60 feet per round nor can it be lower than 10 feet per round. They may make use of their movement to move horizontally as normal. If they land before the effect ends, they take no falling damage.",
+				description : "\n   " + "For 10 minutes, whenever they fall, target may control their falling speed, from 5' per round to 60' per round, at the start of each of their turns. If they land before the effect ends, they take no falling damage.",
 				prereqeval : "classes.known.cook.level >= 7"
 			}, 
 			"spider eggs (prereq: lvl 7 cook)" : {
@@ -155,7 +156,7 @@ ClassList["cook"] = {
 			"startouched seeds (prereq: lvl 11 cook)" : {
 				name : "Startouched Seeds",
 				source : ["HB", 0], 
-				description : "\n   " + "Target rolls 1d4. May recover expended spell slots that have a combined level that is equal to or less than the number rolled. If recovered slots are not used within 10 minutes, they are lost.",
+				description : "\n   " + "Target rolls 1d4. May recover expended spell slots that have a combined level that is equal to or less than the number rolled. If recovered slots are not used within 1 minute, they are lost.",
 				prereqeval : "classes.known.cook.level >= 11"
 			}, 
 			"sweet and sour beets (prereq: lvl 11 cook)" : {
@@ -167,13 +168,13 @@ ClassList["cook"] = {
 			"boiled dragon's tail (prereq: lvl 15 cook)" : {
 				name : "Boiled Dragon's Tail",
 				source : ["HB", 0], 
-				description : "\n   " + "Target grows scales across their body and sprout a tail made of fire. For 1 minute, the target gains +1 AC and can use an action to do one of the following:\n   Frightful Presence. The target roars. Each creature of the target's choice that is within 30' must succeed on a Wis saving throw or become Frightened of the target for 1 minute. The DC is equal to your Morsel save DC. A creature may repeat its saving throw at the end of each of its turns, ending the effect on itself on a success. If a save is successful, the creature is immune to the target's Frightful Presence for the next minute.\n   Tail Swipe: The target makes an unarmed strike with its tail. They are considered proficient with this unarmed strike. The attack deals 4d8 fire damage on a hit.",
+				description : "\n   " + "Target grows scales across their body and sprout a tail made of fire. For 1 minute, the target gains +1 AC and can use an action to do one of the following:\n   Frightful Presence. The target roars. Each creature of the target's choice that is within 30' must succeed on a Wis saving throw or become Frightened of the target for 1 minute. The DC is equal to your Morsel save DC. A creature may repeat its saving throw at the end of each of its turns, ending the effect on itself on a success. If a save is successful, the creature is immune to the target's Frightful Presence for the next minute.\n   Tail Swipe: Melee Weapon Attack: +8 to hit, reach 10ft, one target. Hit: 4d8 fire damage.",
 				prereqeval : "classes.known.cook.level >= 15"
 			}, 
 			"hydra tongue (prereq: lvl 15 cook)" : {
 				name : "Hydra Tongue",
 				source : ["HB", 0], 
-				description : "\n   " + "Target grows a second head that lasts for 1 minute. The head grants them the following benefits:\n \u2022 they gain 1d10 temporary hit points at the start of their turn.\n \u2022 Any limbs amputated in the last hour regenerate at the start of their turn.\n \u2022 They gain an extra reaction that can only be used for Opportunity Attacks.\n \u2022 They gain an extra action that can only be used to take the Disengage, Help, or Search action.\n   At the end of the duration, the head falls off and evaporates, leaving behind no trace.",
+				description : "\n   " + "Target grows a second head that lasts for 1 minute. The head grants them the following benefits:\n \u2022 they gain 1d10 temporary hit points at the start of each of their turns.\n \u2022 Any limbs amputated in the last 24 hours regenerate at the start of their turn.\n \u2022 They gain an extra reaction that can only be used for Opportunity Attacks.\n \u2022 They gain an extra action that can only be used to take the Disengage, Help, or Search action.\n   At the end of the duration, the head falls off and evaporates, leaving behind no trace.",
 				prereqeval : "classes.known.cook.level >= 15"
 			}, 
 			"elemental pie (prereq: lvl 15 cook)" : {
@@ -263,19 +264,19 @@ ClassList["cook"] = {
 			"vodka slushie (prereq: lvl 7 brewmeister)" : {
 				name : "Vodka Slushie",
 				source : ["HB", 0], 
-				description : "\n   " + "20' radius difficult terrain centered on target. When created, all creatures hostile to the target within the area must make Str saves or be pushed out of the area away from the target. Lasts 1 minute or until melted by intense heat.",
+				description : "\n   " + "15' radius difficult terrain centered on target. When created, all creatures hostile to the target within the area must make Str saves or be pushed out of the area away from the target. Lasts 1 minute or until melted by intense heat.",
 				prereqeval : "classes.known.cook.level >= 7 && classes.known.cook.subclass == 'cook-brewmeister'"
 			},
 			"hellfire whiskey (prereq: lvl 13 brewmeister)" : {
 				name : "Hellfire Whiskey",
 				source : ["HB", 0], 
-				description : "\n   " + "Target wreathed in yellow-green flames for 1 minute. Large or smaller creatures hostile to the target starting their turn within 10' of the target must make Con saves or suffer one level of exhaustion.",
+				description : "\n   " + "Target wreathed in yellow-green flames for 1 minute. The flames shed dim light in a 10' radius. Large or smaller creatures hostile to the target entering or starting their turn within 10' of the target must make Con saves or suffer one level of exhaustion.",
 				prereqeval : "classes.known.cook.level >= 13 && classes.known.cook.subclass == 'cook-brewmeister'"
 			},
 			"angel's kiss (prereq: lvl 17 brewmeister)" : {
 				name : "Angel's Kiss",
 				source : ["HB", 0], 
-				description : "\n   " + "Target sheds bright light in 30' radius and dim light for additional 30'. Creatures hostile to the target starting their turn in the bright light must make Con saves or be blinded until the start of their next turn. Creatures with darksvision save at disadvantage.",
+				description : "\n   " + "Target sheds bright light in 30' radius and dim light for additional 30' for 1 minute. Creatures hostile to the target starting their turn in the bright light must make Con saves or be blinded until the start of their next turn. Creatures with darksvision save at disadvantage.",
 				prereqeval : "classes.known.cook.level >= 17 && classes.known.cook.subclass == 'cook-brewmeister'"
 			}
 		},
@@ -283,7 +284,7 @@ ClassList["cook"] = {
 			name : "Smelling Salts",
 			source : ["HB", 0],
 			minlevel : 1,
-			description : "\n   " + "Bonus action: wave smelling salts under the nose of charmed or frightened creature that you can touch. If the creature has made a saving throw against their condition, they may repeat one save now, ending the condition on a success.\n   At 7th level, you may use this feature on a stunned creature.\n   At 13th level, you may use this feature on a paralyzed creature.",
+			description : "\n   " + "Bonus action: wave smelling salts under the nose of charmed or frightened creature that you can touch. If the creature has made a saving throw against their condition, they may repeat one save now, ending the condition on a success. They can only repeat the save for one condition per use of this feature.\n   At 7th level, you may use this feature on a stunned creature.\n   At 13th level, you may use this feature on a paralyzed creature.",
 			action : ["bonus action", ""] 
 		},
 		"expertise" : {
@@ -355,8 +356,8 @@ ClassSubList["cook-sous chef"] = {
 			source : ["HB", 0],
 			minlevel : 3,
 			description : "\n   " + "If you are within 60' of a willing creature you can see, you can reach into your Cook's Bag, pull out a morsel, and throw it into the creature's mouth as an action. They ingest it immediately.\n  Additionally, when you feed a morsel to a willing creature that you can touch (other than yourself), you may do so as a bonus action.",
-			eval : "RemoveAction('action', 'Morsels - range touch'); AddAction('action', 'Morsels - range 60', 'We Deliver'); AddAction('bonus action', 'We Deliver - range touch');",
-			removeeval : "RemoveAction('action', 'Morsels - range 60'); RemoveAction('bonus action', 'We Deliver - range touch'); AddAction('action', 'Morsels - range touch');"
+			eval : "RemoveAction('action', 'Morsels, feed - range touch'); AddAction('action', 'Morsels, feed - range 60', 'We Deliver'); AddAction('bonus action', 'We Deliver - range touch');",
+			removeeval : "RemoveAction('action', 'Morsels, feed - range 60'); RemoveAction('bonus action', 'We Deliver - range touch'); AddAction('action', 'Morsels, feed - range touch');"
 		},
 		"subclassfeature6" : {
 			name : "Secret Sauce",
@@ -407,12 +408,14 @@ ClassSubList["cook-mess sergeant"] = {
 			action : ["bonus action", " - ingest a morsel"]
 		},
 		"subclassfeature6" : {
-			name : "Racaus Belch",
+			name : "Raucous Belch",
 			source : ["HB", 0],
 			minlevel : 6,
 			description : "\n   " + "As an action, you may have each hostile creature in a 10' cone originating from you make a Wis save against your Morsel save DC. On fail, the target(s) have disadvantage on attack rolls against all creatures other than you until the start of your next turn.",
-			usages : "event.value = Math.max(1, What('Con Mod'));",
-			recovery : "long rest"
+			usages : "Constitution modifier per ",
+			usagescalc : "event.value = Math.max(1, What('Con Mod'));",
+			recovery : "long rest",
+			action : ["action", ""]
 		},
 		"subclassfeature10" : {
 			name : "Sturdy Stomach",
@@ -430,7 +433,7 @@ ClassSubList["cook-mess sergeant"] = {
 			name : "Legendary Morsel - Crystalline Heart",
 			source : ["HB", 0],
 			minlevel : 14,
-			description : "\n   " + "You may make the legendary morsel Crystalline Heart once per long rest. It does not expire until your next long rest.\n   Monkey's Brains: for 1 minute, if the target's total for a Str, Dex, or Con ability check or saving throw is less than their score for the ability being checked, they may use that score in place of the total.",
+			description : "\n   " + "You may make the legendary morsel Crystalline Heart once per long rest. It does not expire until your next long rest.\n   Crystalline Heart: for 10 minutes, if the target's total for a Str, Dex, or Con ability check or saving throw is less than their score for the ability being checked, they may use that score in place of the total.",
 			usages : 1,
 			recovery : "long rest"
 		}
@@ -492,7 +495,7 @@ ClassSubList["cook-brewmeister"] = {
 			source : ["HB", 0],
 			minlevel : 3,
 			toolProfs : ["Brewer's supplies"],
-			description : "\n   " + "When you prepare a morsel, you may spike it. Effects from different spiked morsels stack. Creatures that eat more than one spiked morsel become intoxicated for one minute. Intoxicated creatures are immune to charmed and frightened conditions. When intoxication ends, all morsel effects end and the creature is 'hung over' - can't move or take actions until the end of its next turn."
+			description : "\n   " + "When you prepare a morsel, you may spike it. Effects from different spiked morsels stack. Creatures that eat more than one spiked morsel become intoxicated for one minute. Intoxicated creatures are immune to charmed and frightened conditions. When intoxication ends, all morsel effects end and the creature is 'hung over' - can't move or take actions until the end of its next turn. A creature can only become intoxicated once per rest."
 		},
 		"subclassfeature6" : {
 			name : "Drunken Stumble",
@@ -510,7 +513,7 @@ ClassSubList["cook-brewmeister"] = {
 			name : "Angry Drunk",
 			source : ["HB", 0],
 			minlevel : 14,
-			description : "\n   " + "Once per turn, creatures intoxicated by you may add your Con mod to a weapon attack damage roll."
+			description : "\n   " + "Once per turn, creatures intoxicated by you may add your Con mod to an attack damage roll."
 		},
 		"subclassfeature18" : {
 			name : "Legendary Morsel - Master Brew",
@@ -532,19 +535,24 @@ ClassSubList["cook-monster masher"] = {
 			name : "Vital Harvest",
 			source : ["HB", 0],
 			minlevel : 3,
-			description : "\n   " + "Harvest meat from hostile creatures of CR 1 or more killed by you or an ally. Harvesting takes 1 hour and must be done within 24 hours of kill. Meat is kept in Cook's Bag until ready to prepare. Only one harvest at a time. As part of a long rest, you can prepare a special meal from the harvest to feed up to 5 creatures. Meal provides a benefit for 8 hours after the long rest:\n \u2022 Beast. Current and max hit points increased by 10.\n \u2022 Monstrosity: Adv on Str, Dex, and Con saves vs magic.\n \u2022 Ooze: 10' blindsight.\n \u2022 Plant. While in direct sunlight adv on Str and Con checks and any dice to regain hit points count as having rolled maximum."
+			description : "\n   " + "Harvest meat from hostile creatures of CR 1 or more killed by you or an ally. Harvesting takes 1 hour and must be done within 24 hours of kill. Meat is kept in Cook's Bag until ready to prepare. Only one harvest at a time. As part of a short or long rest, you can prepare a special meal from the harvest to feed up to 5 + your constitution modifier creatures. Meal provides a benefit for 24 hours from the end of the rest or until your next long rest, whichever comes first:\n \u2022 Beast. Current and max hit points increased by 10.\n \u2022 Monstrosity: Adv on Str, Dex, and Con saves vs magic.\n \u2022 Ooze: 10' blindsight.\n \u2022 Plant. While in direct sunlight adv on Str and Con checks and any dice to regain hit points count as having rolled maximum.\n \u2022 Aberration. Gain 60' darkvision and 60' telepathy.\n \u2022 Dragon. Gain flying speed of 60. If turn ends with you in the air, you fall.\n \u2022 Fiend. Adv on all Cha and Int ability checks and saving throws.\n \u2022 Giant. You gain benefits of the Enlarge spell."
 		},
 		"subclassfeature6" : {
 			name : "Autonomous Bag",
 			source : ["HB", 0],
 			minlevel : 6,
-			description : "\n   " + "When you deal slashing damage with a melee weapon attack to a hostile creature that isn't humanoid, celestial, undead, construct, or fey, cut off a chunk of meat and place it in your Cook's Bag as part of the attack. It becomes a morsel that heals for 1d12 + your Con mod. You may only have one morsel of this type in your Cook's Bag at a time."
+			usages : "Constitution modifier per",
+			usagescalc: "event.value = Math.max(1, What('Con Mod'));",
+			recovery: "long rest",
+			description : "\n   " + "When you deal slashing damage with a melee weapon attack to a hostile creature that isn't humanoid, celestial, undead, construct, or fey, cut off a chunk of meat and place it in your Cook's Bag as part of the attack. It becomes a morsel that heals for 2d6 hp if ingested by a friendly creature, or 2d6 acid damage (Con save for half) if ingested by a hostile creature. Damage and healing increases by 1d6 at 7th (3d6), 9th (4d6), 13th (5d6), 17th (6d6), and 20th (7d7) level. You may only have one morsel of this type in your Cook's Bag at a time. You can season and cook this morsel a number of times equal to your Con modifier (min 1) per long rest."
 		},
 		"subclassfeature10" : {
-			name : "Emboldened Harvest",
+			name : "Combat Bag",
 			source : ["HB", 0],
 			minlevel : 10,
-			description : "\n   " + "You can harvest meat using Vital Harvest from additional creature types:\n \u2022 Aberration. Gain 60' darkvision and 60' telepathy.\n \u2022 Dragon. Gain flying speed of 60. If turn ends with you in the air, you fall.\n \u2022 Fiend. Adv on all Cha and Int ability checks and saving throws.\n \u2022 Giant. You gain benefits of the Enlarge spell."
+			eval : "AddWeapon('Combat Bag');",
+			removeeval : "RemoveWeapon('Combat Bag');",
+			description : "\n   " + "Your Cook's Bag counts as a simple magical ranged weapon that you are proficient with. It deals 1d12 bludgeoning damage, and has the ammunition and range 30/120 properties. The only ammunition you can use are your morsels. Choose the morsel before you make an attack roll. If you hit, you can have the target immediately ingest the morsel used for ammunition."
 		},
 		"subclassfeature14" : {
 			name : "Vital Observance",
@@ -564,4 +572,27 @@ ClassSubList["cook-monster masher"] = {
 			recovery : "long rest"
 		}
 	}
+};
+
+WeaponsList["combatbag"] = {
+	
+	regExpSearch : /^combat(?=.*bag).*$/i,
+	
+	name : "Combat Bag",
+	
+	source : ["HB", 0],
+	
+	list : "ranged",
+	
+	ability : 2,
+	
+	type : "Simple",
+	
+	damage : [1, 12, "bludgeoning"],
+	
+	range : "30/120 ft",
+	
+	description : "Ammunition - morsels",
+	
+	abilitytodamage : true, 
 };
